@@ -1,0 +1,53 @@
+version: '3'
+services:
+  #Nginx Service
+  webserver:
+    image: nginx
+    container_name: webserver
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8881:80"
+      - "443:443"
+    volumes:
+      - ./websites/:/usr/share/nginx/html
+      # - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - app-network
+#MySQL Service
+  webserver_db:
+    image: mysql
+    container_name: webserver_db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "1306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin@123
+      MYSQL_USER: vishva
+      MYSQL_PASSWORD: admin@123
+      MYSQL_ROOT_HOST: '%'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    networks:
+      - app-network
+  # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - webserver_db
+    image: phpmyadmin/phpmyadmin
+    container_name: webserver_db_access
+    restart: unless-stopped
+    ports:
+      - '8882:80'
+    links: 
+      - webserver_db:webserver_db
+    environment:
+      PMA_HOST: webserver_db
+      PMA_PORT: 3306
+    networks:
+      - app-network
+networks:
+   app-network:
