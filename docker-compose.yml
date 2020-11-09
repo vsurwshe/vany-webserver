@@ -49,5 +49,20 @@ services:
       PMA_PORT: 3306
     networks:
       - app-network
+  # jenkins server
+  jenkins:
+    user: "root"
+    container_name: jenkins_server
+    image: bitnami/jenkins
+    environment:
+       JENKINS_USERNAME: vishva
+       JENKINS_PASSWORD: admin@123
+    restart: always
+    ports:
+      - "9000:8080"
+    volumes:
+      - "$PWD/jenkins_home:/bitnami/jenkins"
+    networks:
+      - app-network
 networks:
    app-network:

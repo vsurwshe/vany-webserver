@@ -1,5 +1,6 @@
 /mysqldata
 /websites/app
 /websites/.*
+/jenkins_home
 
 
