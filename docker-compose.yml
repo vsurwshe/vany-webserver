@@ -66,3 +66,5 @@ services:
       - app-network
 networks:
    app-network:
+     external:
+       name: common_network

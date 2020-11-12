@@ -1,6 +1,8 @@
 /mysqldata
 /websites/app
+/websites/rvcabs
 /websites/.*
 /jenkins_home
+/hotel-backend
 
 
